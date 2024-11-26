@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land } from 'objects';
+import { Flower, Land, Cube } from 'objects';
 import { BasicLights } from 'lights';
 
 class SeedScene extends Scene {
@@ -11,6 +11,7 @@ class SeedScene extends Scene {
         // Init state
         this.state = {
             gui: new Dat.GUI(), // Create GUI for scene
+            // TO-DO: Adjust rotation speed here. Remove from GUI or leave in?
             rotationSpeed: 1,
             updateList: [],
         };
@@ -18,11 +19,15 @@ class SeedScene extends Scene {
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
+        // TO-DO: Implement actual game mechanics here
+        // Make this more generalized or make multiple scenes?
+
         // Add meshes to scene
         const land = new Land();
         const flower = new Flower(this);
+        const cube = new Cube(this);
         const lights = new BasicLights();
-        this.add(land, flower, lights);
+        this.add(land, flower, lights, cube);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

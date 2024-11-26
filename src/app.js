@@ -28,12 +28,16 @@ document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
 // Set up controls
+// TO-DO: Create OrbitControls class instance using new controls?
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.enablePan = false;
 controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
+// TO-DO: add controls.
+// What controls?
+// input, level, restart, clear selection, quit?
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
