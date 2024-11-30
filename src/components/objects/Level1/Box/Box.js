@@ -1,20 +1,53 @@
-import { Group } from 'three';
+import { Group, Color } from 'three';
 import * as THREE from 'three';
 
 class Box extends Group {
-    constructor(n) {
+    constructor(
+        parent,
+        numBoxes,
+        colorOffset,
+        texture
+    ) {
         super();
+
+        this.state = {
+            gui: parent.state.gui,
+            check: (() => this.checkAnswer()),
+            level: 1
+        }
+
+        this.texture = null;
+        this.colorOffset = (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255;
+        this.numBoxes = 3 + (Math.floor(this.state.level / 3))
 
         this.name = 'box';
 
         //TO-DO: color algorithm
-        const palette = [0x3d405b, 0x656d4a, 0x967aa1];
+        this.answer = Math.floor(Math.random() * (this.numBoxes))
+        console.log("ANSWER: ", this.answer)
+        let palette = [];
+        let color = [
+                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255) + 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255)+ 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255)+ 1))) / 255
+                ]
+        color = new Color(color[0], color[1], color[2])
+        let answerColor = color.clone().addScalar(this.colorOffset)
+
+        for (let k = 0; k < this.numBoxes; k++) {
+            if (k == this.answer) {
+                console.log("got here")
+                palette[k] = answerColor
+            } else {
+                palette[k] = color
+            } 
+        }
 
         const placedPositions = [];
         const boxSize = 2;
         const spacing = 3;
 
-        for (let i = 0; i < n; i++) {
+        for (let i = 0; i < this.numBoxes; i++) {
             let position;
             const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
             const material = new THREE.MeshStandardMaterial({
@@ -42,6 +75,8 @@ class Box extends Group {
 
             this.add(box);
         }
+
+        this.state.gui.add(this.state, 'check')
     }
 
     checkCollision(newPosition, placedPositions, minDistance) {
@@ -54,6 +89,10 @@ class Box extends Group {
             }
         }
         return false;
+    }
+
+    checkAnswer() {
+        this.state.level += 1
     }
 }
 

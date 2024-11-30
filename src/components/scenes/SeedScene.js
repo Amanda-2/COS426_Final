@@ -14,24 +14,29 @@ class SeedScene extends Scene {
             // TO-DO: Adjust rotation speed here. Remove from GUI or leave in?
             rotationSpeed: 1,
             updateList: [],
+            level: 1,
         };
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
-        // TO-DO: Implement actual game mechanics here
-        // Make this more generalized or make multiple scenes?
-        this.level1 = {
-            numBoxes: 3,
-        };
+        // TO-DO: Loading issue: more than 5 boxes causes it not to load
+        // let level = {
+        //     texture: null,
+        //     offset: (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255,
+        //     numBoxes: 3 + (Math.floor(this.state.level / 3))
+        // }
+
+        // console.log(level)
+
+        // Empirically, 20 is difficult but possible. 10 is hard, but *mostly* possible.
+        // this.colorOffset = 8 / 255;
 
         // Add meshes to scene
-        const land = new Land();
-        const flower = new Flower(this);
-        const cube = new Cube(this);
         const lights = new BasicLights();
         const floor = new Floor();
-        const box = new Box(this.level1.numBoxes);
+        // const box = new Box(this, level.numBoxes, level.offset, level.texture);
+        const box = new Box(this);
 
         this.add(lights, floor, box);
 
