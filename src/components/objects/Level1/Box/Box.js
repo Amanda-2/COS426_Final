@@ -3,40 +3,36 @@ import * as THREE from 'three';
 
 class Box extends Group {
     constructor(
-        parent,
-        numBoxes,
-        colorOffset,
-        texture
+        parent
     ) {
         super();
 
         this.state = {
+            level: parent.state.level,
             gui: parent.state.gui,
-            check: (() => this.checkAnswer()),
-            level: 1
+            check: ((answer) => this.checkAnswer()),
         }
 
-        this.texture = null;
-        this.colorOffset = (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255;
-        this.numBoxes = 3 + (Math.floor(this.state.level / 3))
+        let numBoxes = 3 + (Math.floor(this.state.level / 3))
+        let colorOffset = (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255
+
+        console.log(parent.state.level)
 
         this.name = 'box';
 
         //TO-DO: color algorithm
-        this.answer = Math.floor(Math.random() * (this.numBoxes))
-        console.log("ANSWER: ", this.answer)
+        this.answer = Math.floor(Math.random() * (numBoxes))
         let palette = [];
         let color = [
-                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255) + 1))) / 255,
-                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255)+ 1))) / 255,
-                    (Math.floor(Math.random() * (255 - (this.colorOffset * 255)+ 1))) / 255
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255) + 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255
                 ]
         color = new Color(color[0], color[1], color[2])
-        let answerColor = color.clone().addScalar(this.colorOffset)
+        let answerColor = color.clone().addScalar(colorOffset)
 
-        for (let k = 0; k < this.numBoxes; k++) {
+        for (let k = 0; k < numBoxes; k++) {
             if (k == this.answer) {
-                console.log("got here")
                 palette[k] = answerColor
             } else {
                 palette[k] = color
@@ -47,7 +43,7 @@ class Box extends Group {
         const boxSize = 2;
         const spacing = 3;
 
-        for (let i = 0; i < this.numBoxes; i++) {
+        for (let i = 0; i < numBoxes; i++) {
             let position;
             const geometry = new THREE.BoxGeometry(boxSize, boxSize, boxSize);
             const material = new THREE.MeshStandardMaterial({
@@ -91,8 +87,12 @@ class Box extends Group {
         return false;
     }
 
-    checkAnswer() {
-        this.state.level += 1
+    checkAnswer(answer) {
+        if (answer == this.answer) {
+            this.state.level += 1
+        } else {
+            window.alert("Oops! That's not the correct answer.")
+        }
     }
 }
 
