@@ -1,12 +1,16 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
-import { Flower, Land, Cube, Floor, Box } from 'objects';
+import { Scene, Color} from 'three';
+import { Flower, Land, Cube, Floor, Box, Level } from 'objects';
 import { BasicLights } from 'lights';
+import { createControls } from './createControls.js';
+// import { Level } from "level";
 
 class SeedScene extends Scene {
-    constructor() {
+    constructor(quitCallback) {
         // Call parent Scene() constructor
         super();
+
+        // let temp = new Level();
 
         // Init state
         this.state = {
@@ -14,18 +18,16 @@ class SeedScene extends Scene {
             // TO-DO: Adjust rotation speed here. Remove from GUI or leave in?
             rotationSpeed: 1,
             updateList: [],
-            level: 1,
+            levelNumber: 1,
+            level: new Level(1)
         };
+
+        console.log(this.state.level)
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
         // TO-DO: Loading issue: more than 5 boxes causes it not to load
-        let level = {
-            texture: null,
-            offset: (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255,
-            numBoxes: 3 + (Math.floor(this.state.level / 3))
-        }
 
         // Empirically, 20 is difficult but possible. 10 is hard, but *mostly* possible.
         this.colorOffset = 8 / 255;
@@ -33,13 +35,20 @@ class SeedScene extends Scene {
         // Add meshes to scene
         const lights = new BasicLights();
         const floor = new Floor();
-        // const box = new Box(this, level.numBoxes, level.offset, level.texture);
-        const box = new Box(this);
+        const box = new Box(this, this.state.level.state.answer, this.state.level.state.numBoxes, this.state.level.state.offset);
+        // const box = new Box(this);
 
         this.add(lights, floor, box);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+
+        this.updateLevelDisplay = createControls(
+            (inputValue) => this.handleSubmit(inputValue),
+            quitCallback
+        );
+
+        this.updateLevelDisplay(this.state.levelNumber);
     }
 
     addToUpdateList(object) {
@@ -55,6 +64,40 @@ class SeedScene extends Scene {
             obj.update(timeStamp);
         }
     }
+
+    handleSubmit(inputValue) {
+        console.log(`Input submitted: ${inputValue}`);
+        
+        if (this.state.level.checkAnswer(inputValue)) {
+            alert('Correct!');
+            this.levelUp();
+        } else {
+            alert('Try again.');
+        }
+    }
+
+    levelUp(){
+        this.state.levelNumber += 1;
+        this.state.level = new Level(this.state.levelNumber)
+        this.updateLevelDisplay(this.state.levelNumber);
+
+        // Make new scene
+        this.newSeedScene();
+    }
+
+    newSeedScene() {
+        // Clear old scene
+        while (this.children.length) {
+            this.remove(this.children[0]);
+        }
+
+        // Construct new scene
+        const lights = new BasicLights();
+        const floor = new Floor();
+        const box = new Box(this, this.state.level.state.answer, this.state.level.state.numBoxes, this.state.level.state.offset);
+        this.add(lights, floor, box);
+    }
+
 }
 
 export default SeedScene;

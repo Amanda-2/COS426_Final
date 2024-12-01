@@ -2,26 +2,22 @@ import { Group, Color } from 'three';
 import * as THREE from 'three';
 
 class Box extends Group {
+    // check if needs parent constructor
     constructor(
-        parent
+        parent,
+        answer,
+        numBoxes,
+        colorOffset
     ) {
         super();
 
         this.state = {
-            level: parent.state.level,
-            gui: parent.state.gui,
-            check: ((answer) => this.checkAnswer()),
+            temp: 32
         }
-
-        let numBoxes = 3 + (Math.floor(this.state.level / 3))
-        let colorOffset = (110 - ((Math.floor(this.state.level / 3)) * 10)) / 255
-
-        console.log(parent.state.level)
 
         this.name = 'box';
 
         //TO-DO: color algorithm
-        this.answer = Math.floor(Math.random() * (numBoxes))
         let palette = [];
         let color = [
                     (Math.floor(Math.random() * (255 - (colorOffset * 255) + 1))) / 255,
@@ -32,7 +28,7 @@ class Box extends Group {
         let answerColor = color.clone().addScalar(colorOffset)
 
         for (let k = 0; k < numBoxes; k++) {
-            if (k == this.answer) {
+            if (k == answer) {
                 palette[k] = answerColor
             } else {
                 palette[k] = color
@@ -71,8 +67,6 @@ class Box extends Group {
 
             this.add(box);
         }
-
-        this.state.gui.add(this.state, 'check')
     }
 
     checkCollision(newPosition, placedPositions, minDistance) {

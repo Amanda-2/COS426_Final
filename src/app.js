@@ -16,7 +16,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
-const scene = new SeedScene();
+const scene = new SeedScene(quitGame);
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
@@ -45,6 +45,13 @@ controls.update();
 // TO-DO: add controls.
 // What controls?
 // input, level, restart, clear selection, quit?
+
+// Quit game
+function quitGame() {
+    // Suggested TODO: 
+    // Display score, reset game state, transition to main menu
+    alert('Returning to the main menu...');
+}
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp) => {
