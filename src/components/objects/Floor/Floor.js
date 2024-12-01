@@ -7,7 +7,7 @@ class Floor extends Group {
 
         this.name = 'floor';
 
-        const geometry = new THREE.CircleGeometry(50, 50);
+        const geometry = new THREE.CircleGeometry(20, 50);
         const material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
             side: THREE.DoubleSide,

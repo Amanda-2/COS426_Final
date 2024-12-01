@@ -22,7 +22,7 @@ class SeedScene extends Scene {
         // TO-DO: Implement actual game mechanics here
         // Make this more generalized or make multiple scenes?
         this.level1 = {
-            numBoxes: 3,
+            numBoxes: 10,
         };
 
         // Add meshes to scene
