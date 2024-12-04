@@ -1,6 +1,6 @@
 import { Group } from 'three';
 import * as THREE from 'three';
-import sky from './textures/sky.png';
+import sky from '../../textures/sky.png';
 
 class Skybox extends Group {
     constructor() {

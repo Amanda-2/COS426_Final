@@ -3,36 +3,31 @@ import * as THREE from 'three';
 
 class Box extends Group {
     // check if needs parent constructor
-    constructor(
-        parent,
-        answer,
-        numBoxes,
-        colorOffset
-    ) {
+    constructor(parent, answer, numBoxes, colorOffset) {
         super();
 
         this.state = {
-            temp: 32
-        }
+            temp: 32,
+        };
 
         this.name = 'box';
 
         //TO-DO: color algorithm
         let palette = [];
         let color = [
-                    (Math.floor(Math.random() * (255 - (colorOffset * 255) + 1))) / 255,
-                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255,
-                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255
-                ]
-        color = new Color(color[0], color[1], color[2])
-        let answerColor = color.clone().addScalar(colorOffset)
+            Math.floor(Math.random() * (255 - colorOffset * 255 + 1)) / 255,
+            Math.floor(Math.random() * (255 - colorOffset * 255 + 1)) / 255,
+            Math.floor(Math.random() * (255 - colorOffset * 255 + 1)) / 255,
+        ];
+        color = new Color(color[0], color[1], color[2]);
+        let answerColor = color.clone().addScalar(colorOffset);
 
         for (let k = 0; k < numBoxes; k++) {
             if (k == answer) {
-                palette[k] = answerColor
+                palette[k] = answerColor;
             } else {
-                palette[k] = color
-            } 
+                palette[k] = color;
+            }
         }
 
         // Box placement parameters (adjust these to increase max number of boxes)
@@ -52,7 +47,7 @@ class Box extends Group {
             const hash = new Map();
             let allPlaced = true;
 
-            for (let i = 0; i < n; i++) {
+            for (let i = 0; i < numBoxes; i++) {
                 let position;
                 let attempts = 0;
 
@@ -175,9 +170,9 @@ class Box extends Group {
 
     checkAnswer(answer) {
         if (answer == this.answer) {
-            this.state.level += 1
+            this.state.level += 1;
         } else {
-            window.alert("Oops! That's not the correct answer.")
+            window.alert("Oops! That's not the correct answer.");
         }
     }
 }
