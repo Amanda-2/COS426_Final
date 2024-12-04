@@ -1,19 +1,18 @@
-import logo from './huecluelogo4.svg';
+import logo from '../textures/huecluelogo4.svg';
 
 export function createControls(onSubmitCallback, onQuitCallback) {
+    // Create the level display
+    const levelDisplay = document.createElement('div');
+    levelDisplay.id = 'level-display';
+    levelDisplay.innerText = 'Level 1';
+    levelDisplay.style.fontSize = '16px';
+    levelDisplay.style.position = 'absolute';
+    levelDisplay.style.top = '15px';
+    levelDisplay.style.left = '20px';
+    levelDisplay.style.color = 'white';
+    levelDisplay.style.fontFamily = 'Arial, sans-serif';
 
-   // Create the level display
-   const levelDisplay = document.createElement('div');
-   levelDisplay.id = 'level-display';
-   levelDisplay.innerText = 'Level 1';
-   levelDisplay.style.fontSize = '16px';
-   levelDisplay.style.position = 'absolute';
-   levelDisplay.style.top = '15px';
-   levelDisplay.style.left = '20px';
-   levelDisplay.style.color = 'white';
-   levelDisplay.style.fontFamily = 'Arial, sans-serif';
-
-   // Logo
+    // Logo
     const svgImage = document.createElement('img');
     svgImage.id = 'svg-image';
     svgImage.src = logo;
@@ -24,17 +23,17 @@ export function createControls(onSubmitCallback, onQuitCallback) {
     svgImage.style.left = '98px'; // Place it next to the submit button
 
     // Title
-   const title = document.createElement('div');
-   title.id = 'level-display';
-   title.innerText = 'HUE \b \b \b \b \b CLUE';
-   title.style.fontSize = '40px';
-   title.style.position = 'absolute';
-   title.style.top = '40px';
-   title.style.left = '20px';
-   title.style.color = 'white';
-   title.style.fontFamily = 'Arial, sans-serif';
+    const title = document.createElement('div');
+    title.id = 'level-display';
+    title.innerText = 'HUE \b \b \b \b \b CLUE';
+    title.style.fontSize = '40px';
+    title.style.position = 'absolute';
+    title.style.top = '40px';
+    title.style.left = '20px';
+    title.style.color = 'white';
+    title.style.fontFamily = 'Arial, sans-serif';
 
-   // Create the input box
+    // Create the input box
     const inputBox = document.createElement('input');
     inputBox.id = 'name-input';
     inputBox.type = 'text';
@@ -82,8 +81,8 @@ export function createControls(onSubmitCallback, onQuitCallback) {
     quitButton.style.top = '280px'; // Distance from the top of the screen
     quitButton.style.left = '30px'; // Distance from the right edge of the screen
 
-   const circle_offset = -150;
-   const circle_radius = 450;
+    const circle_offset = -150;
+    const circle_radius = 450;
 
     // Create the quarter-circle
     const quarterCircle = document.createElement('div');
@@ -97,7 +96,6 @@ export function createControls(onSubmitCallback, onQuitCallback) {
     quarterCircle.style.borderRadius = `${circle_radius}px`; // Top-left quarter-circle
     quarterCircle.style.border = '2px solid white';
 
-
     // Reset button?
     const rButton = document.createElement('button');
     rButton.id = 'r-button';
@@ -109,7 +107,7 @@ export function createControls(onSubmitCallback, onQuitCallback) {
     rButton.style.borderRadius = '50px';
     rButton.style.padding = '10px 20px';
     rButton.style.cursor = 'pointer';
-    
+
     rButton.style.position = 'absolute'; // Position relative to the screen
     rButton.style.top = '220px'; // Distance from the top of the screen
     rButton.style.left = '120px'; // Distance from the right edge of the screen
@@ -125,31 +123,31 @@ export function createControls(onSubmitCallback, onQuitCallback) {
     hButton.style.borderRadius = '50px';
     hButton.style.padding = '10px 20px';
     hButton.style.cursor = 'pointer';
-    
+
     hButton.style.position = 'absolute'; // Position relative to the screen
     hButton.style.top = '160px'; // Distance from the top of the screen
     hButton.style.left = '170px'; // Distance from the right edge of the screen
-    
-   // Append the quarter-circle to the document body
-   document.body.appendChild(quarterCircle);
-   document.body.appendChild(levelDisplay);
-   document.body.appendChild(svgImage);
-   document.body.appendChild(title);
-   document.body.appendChild(quitButton);
-   document.body.appendChild(inputBox);
-   document.body.appendChild(submitButton);
 
-   document.body.appendChild(rButton);
-   document.body.appendChild(hButton);
+    // Append the quarter-circle to the document body
+    document.body.appendChild(quarterCircle);
+    document.body.appendChild(levelDisplay);
+    document.body.appendChild(svgImage);
+    document.body.appendChild(title);
+    document.body.appendChild(quitButton);
+    document.body.appendChild(inputBox);
+    document.body.appendChild(submitButton);
 
-   // Add event listeners
-   const handleSubmission = () => {
-       const inputValue = inputBox.value.trim();
-       if (onSubmitCallback) {
-           onSubmitCallback(inputValue); // Trigger submission callback
-       }
-       inputBox.value = ''; // Clear the input box
-   };
+    document.body.appendChild(rButton);
+    document.body.appendChild(hButton);
+
+    // Add event listeners
+    const handleSubmission = () => {
+        const inputValue = inputBox.value.trim();
+        if (onSubmitCallback) {
+            onSubmitCallback(inputValue); // Trigger submission callback
+        }
+        inputBox.value = ''; // Clear the input box
+    };
 
     // Submit button click listener
     submitButton.addEventListener('click', handleSubmission);
@@ -170,7 +168,6 @@ export function createControls(onSubmitCallback, onQuitCallback) {
         submitButton.style.transform = 'scale(1)'; // Revert to original size
     });
 
-
     rButton.addEventListener('mouseover', () => {
         rButton.style.transform = 'scale(1.1)'; // Slightly larger button
         rButton.style.transition = 'transform 0.2s'; // Smooth animation
@@ -189,13 +186,13 @@ export function createControls(onSubmitCallback, onQuitCallback) {
         hButton.style.transform = 'scale(1)'; // Revert to original size
     });
 
-   quitButton.addEventListener('click', () => {
-       if (onQuitCallback) {
-           onQuitCallback(); // Trigger quit callback
-       }
-   });
+    quitButton.addEventListener('click', () => {
+        if (onQuitCallback) {
+            onQuitCallback(); // Trigger quit callback
+        }
+    });
 
-   quitButton.addEventListener('mouseover', () => {
+    quitButton.addEventListener('mouseover', () => {
         quitButton.style.transform = 'scale(1.1)'; // Slightly larger button
         quitButton.style.transition = 'transform 0.2s'; // Smooth animation
     });
@@ -204,8 +201,8 @@ export function createControls(onSubmitCallback, onQuitCallback) {
         quitButton.style.transform = 'scale(1)'; // Revert to original size
     });
 
-   // Return a function to update the level display
-   return (newLevel) => {
-       levelDisplay.innerText = `Level ${newLevel}`;
-   };
+    // Return a function to update the level display
+    return (newLevel) => {
+        levelDisplay.innerText = `Level ${newLevel}`;
+    };
 }

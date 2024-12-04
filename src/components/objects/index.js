@@ -6,6 +6,7 @@ export * from './Sample/Cube';
 // Make object in Blender (have a lot of objects from animation course)
 // Export glb or gltf object
 export * from './Floor';
+export * from './Skybox';
 export * from './Level1/Box';
 
 export * from './Level'
