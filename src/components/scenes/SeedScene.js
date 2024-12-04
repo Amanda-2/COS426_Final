@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color} from 'three';
-import { Flower, Land, Cube, Floor, Box, Level } from 'objects';
+import { Scene, Color } from 'three';
+import { Flower, Land, Cube, Floor, Skybox, Box, Level } from 'objects';
 import { BasicLights } from 'lights';
 import { createControls } from './createControls.js';
 // import { Level } from "level";
@@ -19,13 +19,15 @@ class SeedScene extends Scene {
             rotationSpeed: 1,
             updateList: [],
             levelNumber: 1,
-            level: new Level(1)
+            level: new Level(1),
         };
 
-        console.log(this.state.level)
+        console.log(this.state.level);
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
+        const skybox = new Skybox();
+        this.add(skybox);
 
         // TO-DO: Implement actual game mechanics here
         // Make this more generalized or make multiple scenes?
@@ -39,7 +41,12 @@ class SeedScene extends Scene {
         // Add meshes to scene
         const lights = new BasicLights();
         const floor = new Floor();
-        const box = new Box(this, this.state.level.state.answer, this.state.level.state.numBoxes, this.state.level.state.offset);
+        const box = new Box(
+            this,
+            this.state.level.state.answer,
+            this.state.level.state.numBoxes,
+            this.state.level.state.offset
+        );
         // const box = new Box(this);
 
         this.add(lights, floor, box);
@@ -71,7 +78,7 @@ class SeedScene extends Scene {
 
     handleSubmit(inputValue) {
         console.log(`Input submitted: ${inputValue}`);
-        
+
         if (this.state.level.checkAnswer(inputValue)) {
             alert('Correct!');
             this.levelUp();
@@ -80,9 +87,9 @@ class SeedScene extends Scene {
         }
     }
 
-    levelUp(){
+    levelUp() {
         this.state.levelNumber += 1;
-        this.state.level = new Level(this.state.levelNumber)
+        this.state.level = new Level(this.state.levelNumber);
         this.updateLevelDisplay(this.state.levelNumber);
 
         // Make new scene
@@ -98,10 +105,14 @@ class SeedScene extends Scene {
         // Construct new scene
         const lights = new BasicLights();
         const floor = new Floor();
-        const box = new Box(this, this.state.level.state.answer, this.state.level.state.numBoxes, this.state.level.state.offset);
+        const box = new Box(
+            this,
+            this.state.level.state.answer,
+            this.state.level.state.numBoxes,
+            this.state.level.state.offset
+        );
         this.add(lights, floor, box);
     }
-
 }
 
 export default SeedScene;

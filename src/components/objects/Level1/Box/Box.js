@@ -117,6 +117,8 @@ class Box extends Group {
                     canvas.height = 128;
                     const context = canvas.getContext('2d');
                     context.fillStyle = 'black';
+                    context.shadowColor = 'white';
+                    context.shadowBlur = 5;
                     context.font = '50px Arial';
                     context.textAlign = 'center';
                     context.textBaseline = 'middle';
@@ -129,20 +131,6 @@ class Box extends Group {
                     sprite.position.set(pos.x, boxSize + 0.5, pos.z);
                     sprite.scale.set(1.5, 0.75, 1);
                     this.add(sprite);
-                    // Create plane geometry for text on floor
-                    const planeGeometry = new THREE.PlaneGeometry(3, 1.5);
-                    const planeMaterial = new THREE.MeshBasicMaterial({
-                        map: texture,
-                        transparent: true,
-                    });
-                    const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-                    plane.position.set(
-                        pos.x - boxSize / 2,
-                        0.01,
-                        pos.z - boxSize / 2
-                    );
-                    plane.rotation.x = -Math.PI / 2;
-                    this.add(plane);
                 });
             } else {
                 // Reduce box size and try again
