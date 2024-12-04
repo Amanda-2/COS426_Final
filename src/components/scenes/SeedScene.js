@@ -27,7 +27,11 @@ class SeedScene extends Scene {
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
-        // TO-DO: Loading issue: more than 5 boxes causes it not to load
+        // TO-DO: Implement actual game mechanics here
+        // Make this more generalized or make multiple scenes?
+        this.level1 = {
+            numBoxes: 10,
+        };
 
         // Empirically, 20 is difficult but possible. 10 is hard, but *mostly* possible.
         this.colorOffset = 8 / 255;
