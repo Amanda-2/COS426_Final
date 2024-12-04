@@ -7,3 +7,5 @@ export * from './Sample/Cube';
 // Export glb or gltf object
 export * from './Floor';
 export * from './Level1/Box';
+
+export * from './Level'

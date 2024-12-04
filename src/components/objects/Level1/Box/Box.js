@@ -1,14 +1,39 @@
-import { Group } from 'three';
+import { Group, Color } from 'three';
 import * as THREE from 'three';
 
 class Box extends Group {
-    constructor(n) {
+    // check if needs parent constructor
+    constructor(
+        parent,
+        answer,
+        numBoxes,
+        colorOffset
+    ) {
         super();
+
+        this.state = {
+            temp: 32
+        }
 
         this.name = 'box';
 
         //TO-DO: color algorithm
-        const palette = [0x3d405b, 0x656d4a, 0x967aa1];
+        let palette = [];
+        let color = [
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255) + 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255,
+                    (Math.floor(Math.random() * (255 - (colorOffset * 255)+ 1))) / 255
+                ]
+        color = new Color(color[0], color[1], color[2])
+        let answerColor = color.clone().addScalar(colorOffset)
+
+        for (let k = 0; k < numBoxes; k++) {
+            if (k == answer) {
+                palette[k] = answerColor
+            } else {
+                palette[k] = color
+            } 
+        }
 
         // Box placement parameters (adjust these to increase max number of boxes)
         const initialBoxSize = 2;
@@ -158,6 +183,14 @@ class Box extends Group {
         }
 
         return neighbors;
+    }
+
+    checkAnswer(answer) {
+        if (answer == this.answer) {
+            this.state.level += 1
+        } else {
+            window.alert("Oops! That's not the correct answer.")
+        }
     }
 }
 
