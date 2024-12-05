@@ -56,7 +56,8 @@ class SeedScene extends Scene {
 
         this.updateLevelDisplay = createControls(
             (inputValue) => this.handleSubmit(inputValue),
-            quitCallback
+            quitCallback,
+            () => this.newSeedScene() // Regenerate callback
         );
 
         this.updateLevelDisplay(this.state.levelNumber);

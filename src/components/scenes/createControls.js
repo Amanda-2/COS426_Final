@@ -1,6 +1,6 @@
 import logo from '../textures/huecluelogo4.svg';
 
-export function createControls(onSubmitCallback, onQuitCallback) {
+export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCallback) {
     // Create the level display
     const levelDisplay = document.createElement('div');
     levelDisplay.id = 'level-display';
@@ -166,6 +166,12 @@ export function createControls(onSubmitCallback, onQuitCallback) {
 
     submitButton.addEventListener('mouseout', () => {
         submitButton.style.transform = 'scale(1)'; // Revert to original size
+    });
+
+    rButton.addEventListener('click', () => {
+        if (onRegenerateCallback) {
+            onRegenerateCallback(); // Regenerate scene callback
+        }
     });
 
     rButton.addEventListener('mouseover', () => {
