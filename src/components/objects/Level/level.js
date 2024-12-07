@@ -19,7 +19,7 @@ class Level extends Group {
     }
 
     getOffset() {
-        return this.state.offset;
+        return Math.floor(this.state.offset * 255);
     }
 
     getBoxes() {
@@ -31,7 +31,6 @@ class Level extends Group {
     }
 
     checkAnswer(input) {
-        console.log("here")
         return (input == this.state.answer);
     }
 }

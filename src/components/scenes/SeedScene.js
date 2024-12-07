@@ -22,7 +22,17 @@ class SeedScene extends Scene {
             level: new Level(1),
         };
 
-        console.log(this.state.level);
+        this.stats =
+        {
+            "score": 0,
+            "times": [],
+            "minTime": null,
+            "maxTime": null,
+            "offsets": [],
+            "minOffset": 0
+        }
+
+        this.startTime = new Date();
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
@@ -89,6 +99,7 @@ class SeedScene extends Scene {
     }
 
     levelUp() {
+        this.updateStats();
         this.state.levelNumber += 1;
         this.state.level = new Level(this.state.levelNumber);
         this.updateLevelDisplay(this.state.levelNumber);
@@ -113,6 +124,28 @@ class SeedScene extends Scene {
             this.state.level.state.offset
         );
         this.add(lights, floor, box);
+    }
+
+    updateStats() {
+        let levelTime = Date.now() - this.startTime
+        let thisOffset = this.state.level.getOffset()
+        this.stats.times.push(levelTime)
+        this.stats.times.sort();
+        this.stats.maxTime = this.stats.times[this.stats.times.length - 1] / 1000
+        this.stats.minTime = this.stats.times[0] / 1000;
+        this.stats.offsets.push(thisOffset)
+        this.stats.offsets.sort();
+        this.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
+
+        this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
+    }
+
+    changeLevel(newLevel) {
+        this.state.levelNumber = newLevel;
+        this.state.level = new Level(newLevel);
+        this.updateLevelDisplay(newLevel);
+
+        this.newSeedScene();
     }
 }
 
