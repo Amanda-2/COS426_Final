@@ -3,19 +3,19 @@ import * as THREE from 'three';
 
 class Level extends Group {
     // check if needs parent constructor
-    constructor(
-        levelNum
-    ) {
+    constructor(levelNum) {
         super();
 
-        let boxes = 3 + (Math.floor(levelNum / 3))
+        let primitives = 3 + Math.floor(levelNum / 3);
 
         this.state = {
             texture: null,
-            offset: (110 - ((Math.floor(levelNum / 3)) * 10)) / 255,
-            numBoxes: boxes,
-            answer: Math.floor(Math.random() * (boxes))
-        }
+            offset: (110 - Math.floor(levelNum / 3) * 10) / 255,
+            numPrim: primitives,
+            answer: Math.floor(Math.random() * primitives),
+            primTypes: ['box', 'sphere', 'cylinder', 'cone'],
+            texture: ['checkerboard', 'stripes', 'zebra'],
+        };
     }
 
     getOffset() {
@@ -23,7 +23,7 @@ class Level extends Group {
     }
 
     getBoxes() {
-        return this.state.numBoxes;
+        return this.state.numPrim;
     }
 
     getTexture() {
