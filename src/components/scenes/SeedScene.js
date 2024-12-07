@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Flower, Land, Cube, Floor, Skybox, Box, Level } from 'objects';
+import { Flower, Land, Cube, Floor, Skybox, Primitive, Level } from 'objects';
 import { BasicLights } from 'lights';
 import { createControls } from './createControls.js';
 // import { Level } from "level";
@@ -36,14 +36,6 @@ class SeedScene extends Scene {
 
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
-        const skybox = new Skybox();
-        this.add(skybox);
-
-        // TO-DO: Implement actual game mechanics here
-        // Make this more generalized or make multiple scenes?
-        this.level1 = {
-            numBoxes: 10,
-        };
 
         // Empirically, 20 is difficult but possible. 10 is hard, but *mostly* possible.
         this.colorOffset = 8 / 255;
@@ -51,15 +43,17 @@ class SeedScene extends Scene {
         // Add meshes to scene
         const lights = new BasicLights();
         const floor = new Floor();
-        const box = new Box(
+        const skybox = new Skybox();
+        const prim = new Primitive(
             this,
             this.state.level.state.answer,
-            this.state.level.state.numBoxes,
-            this.state.level.state.offset
+            this.state.level.state.numPrim,
+            this.state.level.state.offset,
+            this.state.level.state.primTypes,
+            this.state.level.state.texture
         );
-        // const box = new Box(this);
 
-        this.add(lights, floor, box);
+        this.add(lights, floor, skybox, prim);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -117,13 +111,16 @@ class SeedScene extends Scene {
         // Construct new scene
         const lights = new BasicLights();
         const floor = new Floor();
-        const box = new Box(
+        const skybox = new Skybox();
+        const prim = new Primitive(
             this,
             this.state.level.state.answer,
-            this.state.level.state.numBoxes,
-            this.state.level.state.offset
+            this.state.level.state.numPrim,
+            this.state.level.state.offset,
+            this.state.level.state.primTypes,
+            this.state.level.state.texture
         );
-        this.add(lights, floor, box);
+        this.add(lights, floor, skybox, prim);
     }
 
     updateStats() {
