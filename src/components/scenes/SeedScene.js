@@ -6,7 +6,7 @@ import { createControls } from './createControls.js';
 // import { Level } from "level";
 
 class SeedScene extends Scene {
-    constructor(quitCallback) {
+    constructor(quitCallback, initialLevel = 1) {
         // Call parent Scene() constructor
         super();
 
@@ -18,8 +18,8 @@ class SeedScene extends Scene {
             // TO-DO: Adjust rotation speed here. Remove from GUI or leave in?
             rotationSpeed: 1,
             updateList: [],
-            levelNumber: 1,
-            level: new Level(1),
+            levelNumber: initialLevel,
+            level: new Level(initialLevel),
         };
 
         console.log(this.state.level);
@@ -99,9 +99,7 @@ class SeedScene extends Scene {
 
     newSeedScene() {
         // Clear old scene
-        while (this.children.length) {
-            this.remove(this.children[0]);
-        }
+        this.dispose();
 
         // Construct new scene
         const lights = new BasicLights();
@@ -113,6 +111,13 @@ class SeedScene extends Scene {
             this.state.level.state.offset
         );
         this.add(lights, floor, box);
+    }
+
+    // Cleanup method to dispose resources
+    dispose() {
+        while (this.children.length) {
+            this.remove(this.children[0]);
+        }
     }
 }
 
