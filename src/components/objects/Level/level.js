@@ -6,16 +6,33 @@ class Level extends Group {
     constructor(levelNum) {
         super();
 
+        let primitiveTypes = ['box', 'sphere', 'cylinder', 'cone']
+        let textures = ['checkerboard', 'stripes', 'zebra']
+
         let primitives = 3 + Math.floor(levelNum / 3);
+        let numberTextures = 1 + Math.floor(levelNum / 4);
+        let numberPrimTypes = 1 + Math.floor(levelNum / 5)
 
         this.state = {
             texture: null,
             offset: (110 - Math.floor(levelNum / 3) * 10) / 255,
             numPrim: primitives,
             answer: Math.floor(Math.random() * primitives),
-            primTypes: ['box', 'sphere', 'cylinder', 'cone'],
-            texture: ['checkerboard', 'stripes', 'zebra'],
+            primTypes: this.selectRandom(primitiveTypes, numberPrimTypes),
+            texture: this.selectRandom(textures, numberTextures),
         };
+    }
+
+    selectRandom(list, number) {
+        let randoms = [...list]
+        while (randoms.length > number) {
+            let selectedIndex = Math.floor(Math.random() * (randoms.length))
+            let front = randoms.slice(0, selectedIndex)
+            let back = randoms.slice(selectedIndex + 1)
+            randoms = [...front, ...back]
+        }
+
+        return randoms
     }
 
     getOffset() {
