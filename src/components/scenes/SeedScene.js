@@ -1,6 +1,6 @@
 import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
-import { Floor, Skybox, Primitive, Level } from 'objects';
+import { Flower, Land, Cube, Floor, Skybox, Primitive, Level } from 'objects';
 import { BasicLights } from 'lights';
 import { createControls } from './createControls.js';
 // import { Level } from "level";
@@ -10,10 +10,12 @@ class SeedScene extends Scene {
         // Call parent Scene() constructor
         super();
 
+        // let temp = new Level();
 
         // Init state
         this.state = {
             gui: new Dat.GUI(), // Create GUI for scene
+            // TO-DO: Adjust rotation speed here. Remove from GUI or leave in?
             rotationSpeed: 1,
             updateList: [],
             levelNumber: initialLevel,
@@ -78,11 +80,13 @@ class SeedScene extends Scene {
     }
 
     handleSubmit(inputValue) {
+        console.log(`Input submitted: ${inputValue}`);
+
         if (this.state.level.checkAnswer(inputValue)) {
             alert('Correct!');
             this.levelUp();
         } else {
-            alert('Not quite. Try again.');
+            alert('Try again.');
         }
     }
 
@@ -124,7 +128,7 @@ class SeedScene extends Scene {
         this.stats.minTime = this.stats.times[0] / 1000;
         this.stats.offsets.push(thisOffset)
         this.stats.offsets.sort();
-        this.stats.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
+        this.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
 
         this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
     }
