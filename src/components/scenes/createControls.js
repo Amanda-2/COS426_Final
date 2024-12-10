@@ -1,6 +1,6 @@
 import logo from '../textures/huecluelogo4.svg';
 
-export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCallback) {
+export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCallback, stats) {
     // Create the level display
     const levelDisplay = document.createElement('div');
     levelDisplay.id = 'level-display';
@@ -192,9 +192,11 @@ export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCal
         hButton.style.transform = 'scale(1)'; // Revert to original size
     });
 
+    hButton.addEventListener('click', showHowToPlayOverlay);
+
     quitButton.addEventListener('click', () => {
         if (onQuitCallback) {
-            onQuitCallback(); // Trigger quit callback
+            onQuitCallback(stats); // Trigger quit callback
         }
     });
 
@@ -212,3 +214,63 @@ export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCal
         levelDisplay.innerText = `Level ${newLevel}`;
     };
 }
+
+export function showHowToPlayOverlay() {
+    // Check if the overlay already exists
+    let overlay = document.getElementById('how-to-play-overlay');
+    if (!overlay) {
+        // Create the overlay if it doesn't exist
+        overlay = document.createElement('div');
+        overlay.id = 'how-to-play-overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        overlay.style.color = 'white';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.fontFamily = 'Arial, sans-serif';
+        overlay.style.zIndex = '1000';
+
+        // Instruction text
+        const instructions = document.createElement('div');
+        instructions.innerText = `
+            Welcome to HUE CLUE!
+            
+            - Your goal is to pick the object whose color is different from the rest.
+            - In the top-left corner, type the number associated with your chosen object.
+            - Click "Submit" or press Enter to see whether you're correct.
+            - You earn points based on accuracy and time.
+            
+            Good luck and have fun!
+        `;
+        instructions.style.textAlign = 'center';
+        instructions.style.padding = '20px';
+        instructions.style.fontSize = '18px';
+        instructions.style.maxWidth = '80%';
+        overlay.appendChild(instructions);
+
+        // Close button
+        const closeButton = document.createElement('button');
+        closeButton.innerText = 'Close';
+        closeButton.style.marginTop = '20px';
+        closeButton.style.fontSize = '16px';
+        closeButton.style.padding = '10px 20px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.addEventListener('click', () => {
+            overlay.style.display = 'none';
+        });
+        overlay.appendChild(closeButton);
+
+        // Append overlay to body
+        document.body.appendChild(overlay);
+    }
+
+    // Show the overlay
+    overlay.style.display = 'flex';
+}
+
