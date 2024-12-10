@@ -10,8 +10,8 @@ class Level extends Group {
         let textures = ['checkerboard', 'stripes', 'zebra']
 
         let primitives = 3 + Math.floor(levelNum / 3);
-        let numberTextures = 1 + Math.floor(levelNum / 4);
-        let numberPrimTypes = 1 + Math.floor(levelNum / 5)
+        let numberTextures = Math.min(1 + Math.floor(levelNum / 4), textures.length);
+        let numberPrimTypes = Math.min(1 + Math.floor(levelNum / 5), primitiveTypes.length)
 
         this.state = {
             texture: null,
