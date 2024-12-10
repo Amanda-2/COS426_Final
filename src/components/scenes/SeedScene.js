@@ -37,9 +37,6 @@ class SeedScene extends Scene {
         // Set background to a nice color
         this.background = new Color(0x7ec0ee);
 
-        // Empirically, 20 is difficult but possible. 10 is hard, but *mostly* possible.
-        this.colorOffset = 8 / 255;
-
         // Add meshes to scene
         const lights = new BasicLights();
         const floor = new Floor();
