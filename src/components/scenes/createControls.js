@@ -1,6 +1,11 @@
 import logo from '../textures/huecluelogo4.svg';
 
-export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCallback, stats) {
+export function createControls(
+    onSubmitCallback,
+    onQuitCallback,
+    onRegenerateCallback,
+    stats
+) {
     // Create the level display
     const levelDisplay = document.createElement('div');
     levelDisplay.id = 'level-display';
@@ -216,6 +221,11 @@ export function createControls(onSubmitCallback, onQuitCallback, onRegenerateCal
 }
 
 export function showHowToPlayOverlay() {
+    const fontLink = document.createElement('link');
+    fontLink.href =
+        'https://fonts.googleapis.com/css2?family=Gotu&family=Poiret+One&family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
     // Check if the overlay already exists
     let overlay = document.getElementById('how-to-play-overlay');
     if (!overlay) {
@@ -227,24 +237,27 @@ export function showHowToPlayOverlay() {
         overlay.style.left = '0';
         overlay.style.width = '100%';
         overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
         overlay.style.color = 'white';
         overlay.style.display = 'flex';
         overlay.style.flexDirection = 'column';
         overlay.style.alignItems = 'center';
         overlay.style.justifyContent = 'center';
-        overlay.style.fontFamily = 'Arial, sans-serif';
+        // overlay.style.fontFamily = 'Gotu, sans-serif';
         overlay.style.zIndex = '1000';
 
         // Instruction text
         const instructions = document.createElement('div');
-        instructions.innerText = `
-            Welcome to HUE CLUE!
+        instructions.style.fontFamily = 'Albert Sans, sans-serif';
+        instructions.style.lineHeight = '1.5';
+        instructions.style.fontWeight = '200';
+        instructions.innerHTML = `
+            Welcome to <b>HUE CLUE</b>! <br><br>
             
-            - Your goal is to pick the object whose color is different from the rest.
-            - In the top-left corner, type the number associated with your chosen object.
-            - Click "Submit" or press Enter to see whether you're correct.
-            - You earn points based on accuracy and time.
+            - Your goal is to pick the object whose color is different from the rest.<br>
+            - In the top-left corner, type the number associated with your chosen object.<br>
+            - Click "Submit" or press Enter to see whether you're correct.<br>
+            - You earn points based on accuracy and time.<br><br>
             
             Good luck and have fun!
         `;
@@ -256,10 +269,12 @@ export function showHowToPlayOverlay() {
 
         // Close button
         const closeButton = document.createElement('button');
+        closeButton.style.fontFamily = 'Albert Sans, sans-serif';
+        closeButton.style.fontWeight = '200';
         closeButton.innerText = 'Close';
-        closeButton.style.marginTop = '20px';
-        closeButton.style.fontSize = '16px';
-        closeButton.style.padding = '10px 20px';
+        closeButton.style.marginTop = '15px';
+        closeButton.style.fontSize = '18px';
+        closeButton.style.padding = '5px 15px';
         closeButton.style.cursor = 'pointer';
         closeButton.addEventListener('click', () => {
             overlay.style.display = 'none';
@@ -273,4 +288,3 @@ export function showHowToPlayOverlay() {
     // Show the overlay
     overlay.style.display = 'flex';
 }
-
