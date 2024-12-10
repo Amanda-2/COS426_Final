@@ -14,7 +14,7 @@ class Level extends Group {
             numPrim: primitives,
             answer: Math.floor(Math.random() * primitives),
             primTypes: ['box', 'sphere', 'cylinder', 'cone'],
-            texture: ['checkerboard', 'stripes', 'zebra'],
+            texture: [],
         };
     }
 
@@ -31,7 +31,7 @@ class Level extends Group {
     }
 
     checkAnswer(input) {
-        return (input == this.state.answer);
+        return input == this.state.answer;
     }
 }
 

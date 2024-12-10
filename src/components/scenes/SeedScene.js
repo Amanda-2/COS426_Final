@@ -1,16 +1,20 @@
 import * as Dat from 'dat.gui';
-import { Scene, Color } from 'three';
+import { Scene, Color, Raycaster, Vector2 } from 'three';
 import { Flower, Land, Cube, Floor, Skybox, Primitive, Level } from 'objects';
 import { BasicLights } from 'lights';
 import { createControls } from './createControls.js';
 // import { Level } from "level";
 
 class SeedScene extends Scene {
-    constructor(quitCallback) {
+    constructor(quitCallback, camera) {
         // Call parent Scene() constructor
         super();
 
         // let temp = new Level();
+        this.camera = camera;
+        this.raycaster = new Raycaster();
+        this.mouse = new Vector2();
+        this.selectedObject = null;
 
         // Init state
         this.state = {
@@ -22,15 +26,14 @@ class SeedScene extends Scene {
             level: new Level(1),
         };
 
-        this.stats =
-        {
-            "score": 0,
-            "times": [],
-            "minTime": null,
-            "maxTime": null,
-            "offsets": [],
-            "minOffset": 0
-        }
+        this.stats = {
+            score: 0,
+            times: [],
+            minTime: null,
+            maxTime: null,
+            offsets: [],
+            minOffset: 0,
+        };
 
         this.startTime = new Date();
 
@@ -65,6 +68,15 @@ class SeedScene extends Scene {
         );
 
         this.updateLevelDisplay(this.state.levelNumber);
+        window.addEventListener('mousemove', (event) =>
+            this.onPointerMove(event)
+        );
+    }
+
+    onPointerMove(event) {
+        // Convert mouse position to normalized device coordinates (-1 to +1)
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
     }
 
     addToUpdateList(object) {
@@ -74,6 +86,38 @@ class SeedScene extends Scene {
     update(timeStamp) {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+        const interactiveObjects = [];
+        this.traverse((child) => {
+            if (child.name === 'primitive') {
+                interactiveObjects.push(child);
+            }
+        });
+
+        const intersects = this.raycaster.intersectObjects(interactiveObjects);
+
+        // Reset highlight for previously selected object
+        if (
+            this.selectedObject &&
+            this.selectedObject.material &&
+            'emissive' in this.selectedObject.material
+        ) {
+            this.selectedObject.material.emissive.set(0x000000);
+            this.selectedObject = null;
+        }
+
+        // Highlight the first intersected object
+        if (intersects.length > 0) {
+            const intersectedObject = intersects[0].object;
+            if (
+                intersectedObject.material &&
+                'emissive' in intersectedObject.material
+            ) {
+                this.selectedObject = intersectedObject;
+                this.selectedObject.material.emissive.set(0xff0000); // Highlight color
+            }
+        }
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
@@ -124,17 +168,20 @@ class SeedScene extends Scene {
     }
 
     updateStats() {
-        let levelTime = Date.now() - this.startTime
-        let thisOffset = this.state.level.getOffset()
-        this.stats.times.push(levelTime)
+        let levelTime = Date.now() - this.startTime;
+        let thisOffset = this.state.level.getOffset();
+        this.stats.times.push(levelTime);
         this.stats.times.sort();
-        this.stats.maxTime = this.stats.times[this.stats.times.length - 1] / 1000
+        this.stats.maxTime =
+            this.stats.times[this.stats.times.length - 1] / 1000;
         this.stats.minTime = this.stats.times[0] / 1000;
-        this.stats.offsets.push(thisOffset)
+        this.stats.offsets.push(thisOffset);
         this.stats.offsets.sort();
         this.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
 
-        this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
+        this.stats.score = Math.ceil(
+            this.stats.score + (1000 / levelTime) * (100 / thisOffset) * 1000
+        );
     }
 
     changeLevel(newLevel) {

@@ -177,8 +177,8 @@ class Primitive extends Group {
                     this.add(primitive);
 
                     // Create canvas for text floating on top of cubes
-                    const sprite = this.createNumberLabel(i, pos, size);
-                    this.add(sprite);
+                    // const sprite = this.createNumberLabel(i, pos, size);
+                    // this.add(sprite);
                 });
             } else {
                 // Reduce primitive size and try again
