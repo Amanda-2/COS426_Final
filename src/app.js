@@ -410,7 +410,6 @@ function initMenu(stats = null) {
 function quitGame(stats) {
     // Suggested TODO:
     // Display score, reset game state, transition to main menu
-    alert('Returning to the main menu...');
     initMenu(stats);
 }
 

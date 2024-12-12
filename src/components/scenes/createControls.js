@@ -255,6 +255,10 @@ export function showHowToPlayOverlay() {
             Welcome to <b>HUE CLUE</b>! <br><br>
             
             - Your goal is to pick the object whose color is different from the rest.<br>
+            - Textures are meant to make it more difficult. Your goal is not to find the different <em>texture</em>, but to
+            look past the texture and find the different color! Textures have 2 colors. Both colors are different in the correct object. <br>
+            - As you advance through the levels, the number of objects, the number of differnt types of objects, and the number of different
+            textures will increase. The color difference will decrease, making it harder to spot. How long can you last? <br>
             - In the top-left corner, type the number associated with your chosen object.<br>
             - Click "Submit" or press Enter to see whether you're correct.<br>
             - You earn points based on accuracy and time.<br><br>
