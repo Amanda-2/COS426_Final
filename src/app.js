@@ -337,7 +337,7 @@ function initMenu(stats = null) {
     helpButton.style.fontSize = '30px';
     helpButton.style.fontFamily = 'Poiret One, sans-serif';
     helpButton.style.padding = '5px 10px';
-    helpButton.style.marginBottom = '20px';
+    helpButton.style.marginBottom = '10px';
     helpButton.style.cursor = 'pointer';
     helpButton.style.background = 'transparent'; // Initially transparent
     helpButton.style.color = 'white'; // Text color
@@ -369,7 +369,7 @@ function initMenu(stats = null) {
     const statsContainer = document.createElement('div');
     statsContainer.style.display = 'none';
     statsContainer.style.textAlign = 'center';
-    statsContainer.style.width = '100%';
+    statsContainer.style.width = '80%';
     statsContainer.style.fontFamily = 'Poiret One, sans-serif';
     menuContainer.appendChild(statsContainer);
 
