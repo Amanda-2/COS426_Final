@@ -128,7 +128,7 @@ class SeedScene extends Scene {
         this.stats.minTime = this.stats.times[0] / 1000;
         this.stats.offsets.push(thisOffset)
         this.stats.offsets.sort();
-        this.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
+        this.stats.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
 
         this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
     }
