@@ -10,12 +10,12 @@ class Level extends Group {
         let textures = ['checkerboard', 'stripes', 'zebra']
 
         let primitives = 3 + Math.floor(levelNum / 3);
-        let numberTextures = Math.min(1 + Math.floor(levelNum / 4), textures.length);
+        let numberTextures = Math.min(Math.floor(levelNum / 4), textures.length);
         let numberPrimTypes = Math.min(1 + Math.floor(levelNum / 5), primitiveTypes.length)
 
         this.state = {
             texture: null,
-            offset: (110 - Math.floor(levelNum / 3) * 10) / 255,
+            offset: Math.max((110 - Math.floor(levelNum / 3) * 10), 1) / 255,
             numPrim: primitives,
             answer: Math.floor(Math.random() * primitives),
             primTypes: this.selectRandom(primitiveTypes, numberPrimTypes),
