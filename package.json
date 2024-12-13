@@ -1,6 +1,6 @@
 {
   "name": "hue-clue",
-  "repository": "cos426_final",
+  "repository": "hueclue.github.io",
   "version": "0.1.0",
   "title": "HUE CLUE",
   "description": "SHORT DESCRIPTION OF PROJECT HERE. ONE TO TWO SENTENCES MAX",
@@ -11,8 +11,7 @@
     "COS 426",
     "keywor0d",
     "keyword1",
-    "keyword2-etc",
-    "but this last entry CANNOT have a comma after it ->"
+    "keyword2-etc"
   ],
   "scripts": {
     "start": "webpack-dev-server --mode development --output-public-path \"\"",
