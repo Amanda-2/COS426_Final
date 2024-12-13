@@ -123,11 +123,15 @@ class SeedScene extends Scene {
         let levelTime = Date.now() - this.startTime
         let thisOffset = this.state.level.getOffset()
         this.stats.times.push(levelTime)
-        this.stats.times.sort();
+        this.stats.times.sort(function(a, b) {
+            return a - b;
+        });
         this.stats.maxTime = this.stats.times[this.stats.times.length - 1] / 1000
         this.stats.minTime = this.stats.times[0] / 1000;
         this.stats.offsets.push(thisOffset)
-        this.stats.offsets.sort();
+        this.stats.offsets.sort(function(a, b) {
+            return a - b;
+        });
         this.minOffset = this.stats.offsets[this.stats.offsets.length - 1];
 
         this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
