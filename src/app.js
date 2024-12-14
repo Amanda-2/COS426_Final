@@ -16,9 +16,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { SeedScene } from 'scenes';
 
 // Initialize core ThreeJS components
+const scene = new SeedScene(quitGame);
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
-const scene = new SeedScene(quitGame, camera);
 
 // Set up camera
 camera.position.set(8, 5, -8);
@@ -48,7 +48,7 @@ controls.update();
 
 // Quit game
 function quitGame() {
-    // Suggested TODO:
+    // Suggested TODO: 
     // Display score, reset game state, transition to main menu
     alert('Returning to the main menu...');
 }
