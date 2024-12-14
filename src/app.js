@@ -70,7 +70,7 @@ function initMenu(stats = null) {
         scene.dispose();
     }
     // scene = null;
-    initGame(10);
+    initGame(1);
 
     const fontLink = document.createElement('link');
     fontLink.href =
@@ -241,7 +241,6 @@ function initMenu(stats = null) {
     function startDrag(event) {
         if (event.type === 'touchstart' && event.touches) {
             // Two-finger swipe
-            console.log('here');
             isTwoFingerSwipe = true;
             startXTwoFingers = getAverageTouchX(event); // Calculate average X position of two fingers
             previousTranslate = currentTranslate;
@@ -337,7 +336,6 @@ function initMenu(stats = null) {
     helpButton.style.fontSize = '30px';
     helpButton.style.fontFamily = 'Poiret One, sans-serif';
     helpButton.style.padding = '5px 10px';
-    helpButton.style.marginBottom = '10px';
     helpButton.style.cursor = 'pointer';
     helpButton.style.background = 'transparent'; // Initially transparent
     helpButton.style.color = 'white'; // Text color
@@ -379,7 +377,7 @@ function initMenu(stats = null) {
         const statsTitle = document.createElement('div');
         statsTitle.innerText = 'GAME STATISTICS';
         statsContainer.appendChild(statsTitle);
-        statsTitle.style.fontSize = '30px';
+        statsTitle.style.fontSize = '20px';
 
         const statsContent = `
             <p>Score: ${stats.score}</p>

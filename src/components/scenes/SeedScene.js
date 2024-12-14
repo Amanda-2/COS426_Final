@@ -2,7 +2,7 @@ import * as Dat from 'dat.gui';
 import { Scene, Color } from 'three';
 import { Flower, Land, Cube, Floor, Skybox, Primitive, Level } from 'objects';
 import { BasicLights } from 'lights';
-import { createControls } from './createControls.js';
+import { createControls, popUpAlert } from './createControls.js';
 // import { Level } from "level";
 
 class SeedScene extends Scene {
@@ -22,15 +22,14 @@ class SeedScene extends Scene {
             level: new Level(initialLevel),
         };
 
-        this.stats =
-        {
-            "score": 0,
-            "times": [],
-            "minTime": null,
-            "maxTime": null,
-            "offsets": [],
-            "minOffset": 0
-        }
+        this.stats = {
+            score: 0,
+            times: [],
+            minTime: null,
+            maxTime: null,
+            offsets: [],
+            minOffset: 0,
+        };
 
         this.startTime = new Date();
 
@@ -80,13 +79,14 @@ class SeedScene extends Scene {
     }
 
     handleSubmit(inputValue) {
-
         if (this.state.level.checkAnswer(inputValue)) {
-            alert('Correct!');
+            popUpAlert('Correct!');
+            // alert('Correct!');
             this.levelUp();
         } else {
             this.stats.score -= 25;
-            alert('Try again.');
+            popUpAlert('Try again');
+            // alert('Try again.');
         }
     }
 
@@ -102,7 +102,7 @@ class SeedScene extends Scene {
 
     newSeedScene() {
         // Clear old scene
-        this.dispose()
+        this.dispose();
 
         // Construct new scene
         const lights = new BasicLights();
@@ -120,23 +120,24 @@ class SeedScene extends Scene {
     }
 
     updateStats() {
-        let levelTime = Date.now() - this.startTime
-        let thisOffset = this.state.level.getOffset()
-        this.stats.times.push(levelTime)
-        this.stats.times.sort(function(a, b) {
+        let levelTime = Date.now() - this.startTime;
+        let thisOffset = this.state.level.getOffset();
+        this.stats.times.push(levelTime);
+        this.stats.times.sort(function (a, b) {
             return a - b;
         });
-        this.stats.maxTime = this.stats.times[this.stats.times.length - 1] / 1000
+        this.stats.maxTime =
+            this.stats.times[this.stats.times.length - 1] / 1000;
         this.stats.minTime = this.stats.times[0] / 1000;
-        this.stats.offsets.push(thisOffset)
-        this.stats.offsets.sort(function(a, b) {
+        this.stats.offsets.push(thisOffset);
+        this.stats.offsets.sort(function (a, b) {
             return a - b;
         });
-        console.log(this.stats.offsets)
-        console.log(this.stats.times)
         this.stats.minOffset = this.stats.offsets[0];
 
-        this.stats.score = Math.ceil(this.stats.score + (((1000 / levelTime) * (100 / thisOffset)) * 1000))
+        this.stats.score = Math.ceil(
+            this.stats.score + (1000 / levelTime) * (100 / thisOffset) * 1000
+        );
     }
 
     changeLevel(newLevel) {
