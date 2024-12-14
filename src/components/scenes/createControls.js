@@ -6,6 +6,75 @@ export function createControls(
     onRegenerateCallback,
     stats
 ) {
+    const fontLink = document.createElement('link');
+    fontLink.href =
+        'https://fonts.googleapis.com/css2?family=Gotu&family=Poiret+One&family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
+
+    // // Create the submit button
+    // const submitButton = document.createElement('button');
+    // submitButton.id = 'submit-button';
+    // submitButton.innerText = 'Submit';
+    // submitButton.style.fontSize = '16px';
+    // submitButton.style.fontFamily = 'Albert Sans, sans-serif';
+    // submitButton.style.padding = '5px';
+    // submitButton.style.color = 'white';
+    // submitButton.style.backgroundColor = 'transparent';
+    // submitButton.style.border = '2px solid white';
+    // submitButton.style.borderRadius = '50px';
+    // submitButton.style.padding = '10px 20px';
+    // submitButton.style.cursor = 'pointer';
+    // submitButton.style.boxShadow = '2px 2px 4px grey';
+    // submitButton.style.textShadow = '2px 2px 4px black';
+
+    // submitButton.style.position = 'absolute'; // Independent positioning
+    // submitButton.style.top = '100px'; // Same as input box for alignment
+    // submitButton.style.left = '230px'; // Place right next to input box
+
+    // /////////
+    // const canvas = document.createElement('canvas');
+    // canvas.id = 'gradient';
+    // const ctx = canvas.getContext('2d');
+    // canvas.style.width = `600px`;
+    // canvas.style.height = `600px`;
+    // canvas.style.top = '-280px';
+    // canvas.style.left = '-180px';
+    // canvas.style.display = 'flex';
+    // canvas.style.position = 'absolute';
+    // canvas.style.opacity = '0.7';
+    // canvas.style.maskImage =
+    //     'radial-gradient(circle, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 0) 50%)';
+    // canvas.style.maskSize = '100% 100%';
+    // canvas.style.maskRepeat = 'no-repeat';
+    // // canvas.style.zIndex = '100';
+
+    // const drawGradient = (time) => {
+    //     const width = canvas.width;
+    //     const height = canvas.height;
+
+    //     const gradient = ctx.createLinearGradient(0, 0, width, height);
+    //     gradient.addColorStop(0, `hsl(${(time / 20) % 360}, 80%, 80%)`);
+    //     gradient.addColorStop(1, `hsl(${(time / 20 + 180) % 360}, 80%, 50%)`);
+
+    //     ctx.fillStyle = gradient;
+    //     ctx.fillRect(0, 0, width, height);
+    // };
+
+    // // Animation loop
+    // let startTime = Date.now();
+    // const animate = () => {
+    //     const time = Date.now() - startTime;
+    //     drawGradient(time);
+    //     requestAnimationFrame(animate);
+    // };
+    // ////////////
+
+    // // Append the quarter-circle to the document body
+    // // document.body.appendChild(quarterCircle);
+    // document.body.appendChild(canvas);
+    // animate();
+
     // Create the level display
     const levelDisplay = document.createElement('div');
     levelDisplay.id = 'level-display';
@@ -291,4 +360,37 @@ export function showHowToPlayOverlay() {
 
     // Show the overlay
     overlay.style.display = 'flex';
+}
+
+export function popUpAlert(text) {
+    const fontLink = document.createElement('link');
+    fontLink.href =
+        'https://fonts.googleapis.com/css2?family=Gotu&family=Poiret+One&family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
+
+    const alert = document.createElement('div');
+    alert.width = '512px';
+    alert.height = '128px';
+    alert.style.position = 'absolute';
+    alert.style.top = '100px';
+    alert.style.left = '350px';
+    alert.innerText = text;
+    alert.style.fontSize = '36px';
+    alert.style.fontFamily = 'Albert Sans, sans-serif';
+    alert.style.color = 'white';
+    if (text == 'Correct!') {
+        alert.style.textShadow = '2px 2px 4px green';
+    } else if (text == 'Try again') {
+        alert.style.textShadow = '2px 2px 4px red';
+    }
+    document.body.appendChild(alert);
+
+    setTimeout(() => {
+        alert.style.transition = 'opacity 3s'; // Smooth transition for fading
+        alert.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            alert.remove();
+        }, 2000);
+    }, 0);
 }
